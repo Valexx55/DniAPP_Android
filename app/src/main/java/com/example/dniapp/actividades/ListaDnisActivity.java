@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +33,8 @@ public class ListaDnisActivity extends AppCompatActivity {
     private Toast mensaje_info;
     private BaseDatosDni baseDatosDni;
 
+    private ColorDrawable color_fondo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +54,28 @@ public class ListaDnisActivity extends AppCompatActivity {
             recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }
 
+
         ItemTouchHelper.SimpleCallback callback =
                 new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN, ItemTouchHelper.LEFT){
 
                     @Override//este método se invoca al desplazamiento vertical del item
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    public boolean onMove
+                            (@NonNull RecyclerView recyclerView,
+                             @NonNull RecyclerView.ViewHolder viewHolder,
+                             @NonNull RecyclerView.ViewHolder target) {
+
+                            int pos_elto_seleccionado = viewHolder.getAdapterPosition();
+                            int pos_elto_destino = target.getAdapterPosition();
+
+                            /*Dni dni_aux = lista_dnis.get(pos_elto_destino);
+                            lista_dnis.set(pos_elto_destino, lista_dnis.get(pos_elto_seleccionado));
+                            lista_dnis.set(pos_elto_seleccionado, dni_aux);*/
+
+                            Collections.swap(lista_dnis, pos_elto_seleccionado, pos_elto_destino);
+
+                            dniAdapter.notifyDataSetChanged();
+
+
                         return false;
                     }
 
@@ -73,7 +94,23 @@ public class ListaDnisActivity extends AppCompatActivity {
                     }
 
                     @Override//este método se invoca cada vez que se mueve un poquito vertical u horizontalmente
-                    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    public void onChildDraw
+                            (@NonNull Canvas c,
+                             @NonNull RecyclerView recyclerView,
+                             @NonNull RecyclerView.ViewHolder viewHolder,
+                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                        Log.d("MIAPP", "dX " + dX);
+                        Log.d("MIAPP", "dY " + dY);
+                        Log.d("MIAPP", "actionState " + actionState);
+                        Log.d("MIAPP", "isCurrentlyActive " + isCurrentlyActive);
+
+                        color_fondo = new ColorDrawable(Color.YELLOW);
+                        color_fondo.setBounds(viewHolder.itemView.getRight()+(int)dX,
+                                viewHolder.itemView.getTop(),
+                                viewHolder.itemView.getRight(),
+                                viewHolder.itemView.getBottom());
+                        color_fondo.draw(c);
                         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                     }
                 };
