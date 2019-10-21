@@ -20,7 +20,8 @@ import com.example.dniapp.beans.Dni;
 import com.example.dniapp.beans.DniX;
 import com.example.dniapp.beans.DniY;
 import com.example.dniapp.beans.DniZ;
-import com.example.dniapp.util.Preferencias;
+import com.example.dniapp.persistence.BaseDatosDni;
+import com.example.dniapp.persistence.Preferencias;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         String ultimo_dni = Preferencias.obtenerUltimoDNI(this);
         this.caja_dni.setText(ultimo_dni);
 
-        List<Dni> dniList = Preferencias.cargarFicheroDni(this);
-        mostrarListaDnis(dniList);
+       // List<Dni> dniList = Preferencias.cargarFicheroDni(this);
+       // mostrarListaDnis(dniList);
 
 
     }
@@ -109,7 +110,11 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String dni_json = gson.toJson(dni);
         Log.d(TAG_APP, "DNI json " + dni_json);
-        Preferencias.guardarDNIJson(this, dni_json);
+        //Preferencias.guardarDNIJson(this, dni_json);
+
+        BaseDatosDni baseDatosDni = new BaseDatosDni(this, BaseDatosDni.NOMBRE_BD, null, BaseDatosDni.VERSION_BD);
+        baseDatosDni.insertarDni(dni);
+
     }
 
 

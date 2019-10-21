@@ -1,4 +1,4 @@
-package com.example.dniapp.util;
+package com.example.dniapp.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;

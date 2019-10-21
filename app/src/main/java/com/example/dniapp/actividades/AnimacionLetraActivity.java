@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.dniapp.R;
-import com.example.dniapp.util.Preferencias;
+import com.example.dniapp.persistence.Preferencias;
 
 public class AnimacionLetraActivity extends AppCompatActivity {
 
