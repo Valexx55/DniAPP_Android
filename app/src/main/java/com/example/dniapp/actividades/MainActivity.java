@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.ver_lista_dnis:
                 Log.d(TAG_APP, "Quiere ver la lista de dnis");
+                this.finish();
                 Intent intent = new Intent(this, ListaDnisActivity.class);
                 startActivity(intent);
                 break;

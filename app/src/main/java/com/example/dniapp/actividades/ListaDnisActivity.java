@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -138,5 +139,13 @@ public class ListaDnisActivity extends AppCompatActivity {
         mensaje_info =  Toast.makeText(this, "ORDENADO POR LETRA", Toast.LENGTH_SHORT);
         mensaje_info.show();
 
+    }
+
+    public void tocoFab (View view)
+    {
+        Log.d("MIAPP", "Tocó el botón flotante");
+        this.finish();//cierro la ventan actual
+        Intent intent_main = new Intent(this, MainActivity.class);
+        startActivity(intent_main);//lanzo
     }
 }
