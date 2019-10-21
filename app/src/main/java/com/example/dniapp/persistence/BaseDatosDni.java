@@ -63,6 +63,18 @@ public class BaseDatosDni extends SQLiteOpenHelper {
         }
     }
 
+    public void borrarDni(int id){
+        SQLiteDatabase database = null;
+        try {
+            database = this.getWritableDatabase();
+            database.execSQL("DELETE FROM DNI WHERE id = " + id);
+        }catch (Exception e){
+            Log.e("MIAPP", "Error inserción de datos"+e);
+        }finally {
+            this.cerrarBaseDatos(database);
+        }
+    }
+
     public Dni buscarDniLetra(String numero) {
         Dni dni = null;
 
@@ -102,9 +114,13 @@ public class BaseDatosDni extends SQLiteOpenHelper {
             cursor.moveToFirst();
             lista_dnis = new ArrayList<Dni>(cursor.getCount());
             do{
-                numero = cursor.getInt(1);
-                letra = cursor.getString(2);
-                dniAux = new Dni(numero,letra.charAt(0));
+
+                id = cursor.getInt(0);//ID
+                numero = cursor.getInt(1);//NUM
+                letra = cursor.getString(2);//LETRA
+               //forma alternativa para obtener el campo por el nombre de la columna
+                //letra = cursor.getString(cursor.getColumnIndex("letra"));
+                dniAux = new Dni(numero,letra.charAt(0), id);
                 lista_dnis.add(dniAux);
             }while (cursor.moveToNext());
             cursor.close();

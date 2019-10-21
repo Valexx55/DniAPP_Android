@@ -7,10 +7,18 @@ public class Dni implements Comparable<Dni>{
 
     private int numero;
     private char letra;
+    private int id;
+
 
     protected static final String SECUENCIA_LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Dni(int numero) {
 
@@ -20,6 +28,12 @@ public class Dni implements Comparable<Dni>{
     public Dni(int numero, char letra) {
         this.numero = numero;
         this.letra = letra;
+    }
+
+    public Dni(int numero, char letra, int id) {
+        this.numero = numero;
+        this.letra = letra;
+        this.id = id;
     }
 
     public Dni(){
